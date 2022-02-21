@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="header">
+    <a
+      class="no-link"
+      data-toggle="collapse"
+      href="#collapseClient{{this._id}}"
+      role="button"
+      aria-expanded="false"
+      aria-controls="collapseClient{{this._id}}"
+    >
+      {{this.name}}
+      {{this.lastName}}
+    </a></div>
+
+  <div class="collapse mt-1" id="collapseClient{{this._id}}">
+    
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#deactivateClientModal{{this._id}}"
+    >
+      <i class="fas fa-user-minus"></i>
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#appointmenttModal{{this._id}}"
+    >
+      <i class="fas fa-calendar-plus"></i>
+    </button>
+
+    <a class="d-inline-block" href="https://wa.me/+34{{this.phone}}">
+      <button type="button" class="btn btn-success">
+        <i class="fab fa-whatsapp"></i>
+      </button>
+    </a>
+    <a class="d-inline-block" href="mailto:{{this.email}}">
+      <button type="button" class="btn btn-danger">
+        <i class="far fa-envelope"></i>
+      </button>
+    </a>
+    <a class="d-inline-block" href="tel:{{this.phone}}">
+      <button type="button" class="btn btn-info">
+        <i class="fas fa-phone"></i>
+      </button>
+    </a>
+
+  </div>
+</div>

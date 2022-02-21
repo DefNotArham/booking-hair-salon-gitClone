@@ -1,0 +1,91 @@
+
+<div class="container pt-5">
+
+<div class="row psico-nav">
+
+  <h2 class="col-md-6">{{this.name}}</h2>
+
+  <div class="col-md-5 text-end">
+    
+    <a href="/psychologist/archive" class="d-inline-block">
+      <button type="button" class="btn btn-primary">Archivo
+      </button>
+    </a>
+
+    <form action="/auth/logout" method="POST" class="d-inline-block">
+      <button id="submit" type="submit" class="btn btn-secondary">Cerrar Sesión</button>
+    </form>
+  </div>
+
+</div>
+<div class="row pt-4"> 
+  <div class="col-md-6">
+    <ul class="list-group col-md-7 col-10 m-3 m-md-0">
+    {{#if activeClients}}
+      {{#each activeClients}}
+        <li class="list-group-item">
+          {{#> clientRow this}}
+          {{/clientRow}}
+        </li>
+
+        <!-- Modal Appointment -->
+        {{#> appointment this}}
+        {{/appointment}}
+
+
+        <!-- Modal Modify -->
+        {{#> modify this}}
+        {{/modify}}
+
+        <!-- Modal Deactivate  -->
+        {{#> deactivate this}}
+        {{/deactivate}}
+      {{/each}}
+    {{else}}
+      <p>No hay clientes registrados</p>
+    {{/if}}
+    </ul>
+  </div>
+  
+  <div class="col-md-5" id="container">
+
+  </div>
+</div>
+
+<script>
+  window.addEventListener('DOMContentLoaded', event => {
+    var decodedJson = decodeURIComponent("{{{this.appointments}}}");
+    var databaseEvents =JSON.parse(decodedJson);
+    console.log(databaseEvents);
+
+    const events = databaseEvents.map(event=>{
+      return {
+        id:event._id,
+        client:event.client,
+        startDate:event.date,
+        endDate:event.date,
+        summary:event.summary
+      }
+    });
+
+    $("#container").simpleCalendar({
+        months: ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],
+        days: ['domingo','lunes','martes','miercoles','jueves','viernes','sabado'],
+        displayYear: true,              // Display year in header
+        fixedStartDay: true,            // Week begin always by monday or by day set by number 0 = sunday, 7 = saturday, false = month always begin by first day of the month
+        displayEvent: true,             // Display existing event
+        disableEventDetails: false, // disable showing event details
+        disableEmptyDetails: false, // disable showing empty date details
+        events: events,                     // List of events
+        onInit: function (calendar) {}, // Callback after first initialization
+        onMonthChange: function (month, year) {}, // Callback on month change
+        onDateSelect: function (date, events) {}, // Callback on date selection
+        onEventSelect: function() {}, // Callback on event selection - use $(this).data('event') to access the event
+        onEventCreate: function( $el ) {},          // Callback fired when an HTML event is created - see $(this).data('event')
+        onDayCreate:   function( $el, d, m, y ) {}  // Callback fired when an HTML day is created   - see $(this).data('today'), .data('todayEvents')
+    });
+  });
+
+</script>
+
+</div>

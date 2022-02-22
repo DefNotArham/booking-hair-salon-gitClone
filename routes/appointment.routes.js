@@ -16,6 +16,8 @@ const isLoggedIn = require("../middleware/isLoggedIn");
  * @swagger
  * /api/appointments/all:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *        - appointments
  *     summary: Get all appointments
@@ -42,6 +44,8 @@ router.get("/all", isLoggedIn, async (req, res) => {
  * @swagger
  * /api/appointments/professional/:id :
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *        - appointments
  *     summary: Get all appointments
@@ -66,6 +70,8 @@ router.get("/professional/:id", isLoggedIn, async (req, res) => {
  * @swagger
  * /api/appointments/ :
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *        - appointments
  *     summary: Create new appointment
@@ -113,6 +119,8 @@ router.post("/appointment", isLoggedIn, async (req, res) => {
  * @swagger
  * /api/appointments/:id :
  *   patch:
+ *     security:
+ *        - bearerAuth: []
  *     tags:
  *        - appointments
  *     summary: Edit appointment
@@ -159,6 +167,8 @@ router.patch("/:id", isLoggedIn, async (req, res) => {
  * @swagger
  * /api/appointments/:id:
  *   delete:
+ *     security:
+ *         - bearerAuth: []
  *     tags:
  *       - appointments
  *     summary: Delete appointment

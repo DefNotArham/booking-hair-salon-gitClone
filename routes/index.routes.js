@@ -5,12 +5,16 @@ const professionalsRoutes = require("./professionals.routes");
 
 /**
  * @swagger
- * /:
- *   get:
- *     summary: default listener
- *     responses:
- *       200:
- *         description: All good in here.
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:            # arbitrary name for the security scheme
+ *        type: apiKey
+ *        name: Authorization
+ *        in: header
+ *
+ *
+ * security:
+ *   - bearerAuth: []
  */
 router.get("/", (req, res, next) => {
   res.json("All good in here");

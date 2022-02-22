@@ -15,6 +15,8 @@ const isLoggedIn = require("../middleware/isLoggedIn");
  * @swagger
  * /api/professionals/all:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *        - professionals
  *     summary: Get all professionals

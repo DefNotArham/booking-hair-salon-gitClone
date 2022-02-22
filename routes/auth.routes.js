@@ -144,6 +144,21 @@ router.post("/signup", isLoggedOut, (req, res) => {
  *     tags:
  *       - auth
  *     summary: User login
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: The user's email.
+ *                 example: sophie@gmail.com
+ *               password:
+ *                 type: string
+ *                 description: The user's password.
+ *                 example: patata
  *     responses:
  *       200:
  *         description: user logged

@@ -65,7 +65,7 @@ router.get("/all", isLoggedIn, async (req, res) => {
  *       200:
  *         description: A list of appointments.
  */
-router.post("/professionals", isLoggedIn, async (req, res) => {
+router.post("/", isLoggedIn, async (req, res) => {
   try {
     if (req.body.name && req.body.lastName && req.body.imageUrl && req.body.description) {
       const appointment = await Professional.create({

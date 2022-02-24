@@ -92,7 +92,7 @@ router.get("/professional/:id", isLoggedIn, async (req, res) => {
  *       200:
  *         description: A list of appointments.
  */
-router.post("/appointment", isLoggedIn, async (req, res) => {
+router.post("/", isLoggedIn, async (req, res) => {
   const accessToken = req.headers.authorization;
   try {
     const session = await Session.findById(accessToken).populate("user");

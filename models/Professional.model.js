@@ -10,7 +10,6 @@ const professionalSchema = new Schema(
         },
         imageUrl: {
             type: String,
-            unique: true,
         },
         description: String,
     },

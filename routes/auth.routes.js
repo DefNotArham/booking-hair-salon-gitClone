@@ -195,7 +195,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
           }
           Session.create({ user: user._id, createdAt: Date.now() }).then(
               (session) => {
-                return res.json({ user, accessToken: session._id });
+                return res.json({ name: user.name, email: user.email, lastName: user.lastName, accessToken: session._id });
               }
           );
         });

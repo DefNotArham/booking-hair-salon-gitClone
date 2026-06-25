@@ -1,21 +1,23 @@
 // ℹ️ Gets access to environment variables/settings
 // https://www.npmjs.com/package/dotenv
-require("dotenv/config");
+
+import dotenv from "dotenv";
 
 // ℹ️ Connects to the database
-require("./db");
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
+import db from "./db";
+
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsdoc = require("swagger-jsdoc");
 const options = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'Booking Hair Salon Backend Documentation',
-            version: '1.0.0',
-        },
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Booking Hair Salon Backend Documentation",
+      version: "1.0.0",
     },
-    apis: ['./routes/*'], // files containing annotations as above
+  },
+  apis: ["./routes/*"], // files containing annotations as above
 };
 const swaggerSpec = swaggerJsdoc(options);
 
@@ -24,7 +26,7 @@ const swaggerSpec = swaggerJsdoc(options);
 const express = require("express");
 const app = express();
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);

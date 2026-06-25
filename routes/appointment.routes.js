@@ -1,9 +1,11 @@
-const router = require("express").Router();
+import express from "express";
+
+const router = express.Router();
 
 // Require the User model in order to interact with the database
-const Appointment = require("../models/Appointment.model");
-const Session = require("../models/Session.model")
-const isLoggedIn = require("../middleware/isLoggedIn");
+import Appointment from "../models/Appointment.model.js";
+import Session from "../models/Session.model.js";
+import isLoggedIn from "../middleware/isLoggedIn.js";
 
 /**
  * @swagger
@@ -33,7 +35,6 @@ router.get("/all", isLoggedIn, async (req, res) => {
       user: { $eq: session.user._id },
     }).populate("professional");
     return res.status(200).json(appointments);
-
   } catch (err) {
     console.error(err);
     return res.status(500).json({ errorMessage: err.toString() });
@@ -59,7 +60,6 @@ router.get("/professional/:id", isLoggedIn, async (req, res) => {
       professional: { $eq: req.params.id },
     }).populate("professional");
     return res.status(200).json(appointments);
-
   } catch (err) {
     console.error(err);
     return res.status(500).json({ errorMessage: err.toString() });
@@ -106,8 +106,11 @@ router.post("/", isLoggedIn, async (req, res) => {
         user: user._id,
       });
       return res.status(200).json(appointment);
-    }  else {
-      return res.status(400).json({ errorMessage: "Input data are invalid, should have: date, hour and professionalId" });
+    } else {
+      return res.status(400).json({
+        errorMessage:
+          "Input data are invalid, should have: date, hour and professionalId",
+      });
     }
   } catch (err) {
     console.log(err);
@@ -154,14 +157,16 @@ router.patch("/:id", isLoggedIn, async (req, res) => {
       });
       return res.status(200).json(appointment);
     } else {
-      return res.status(400).json({ errorMessage: "Input data are invalid, should have: date, hour and professionalId" });
+      return res.status(400).json({
+        errorMessage:
+          "Input data are invalid, should have: date, hour and professionalId",
+      });
     }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ errorMessage: err.toString() });
   }
 });
-
 
 /**
  * @swagger
@@ -178,14 +183,13 @@ router.patch("/:id", isLoggedIn, async (req, res) => {
  */
 router.delete("/:id", isLoggedIn, (req, res) => {
   Appointment.findByIdAndDelete(req.params.id)
-      .then(() => {
-        res.status(200).json({ message: "Appointment was delete" });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json({ errorMessage: err.message });
-      });
+    .then(() => {
+      res.status(200).json({ message: "Appointment was delete" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ errorMessage: err.message });
+    });
 });
 
-
-module.exports = router;
+export default router;

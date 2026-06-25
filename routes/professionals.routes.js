@@ -1,10 +1,13 @@
-const router = require("express").Router();
+import express from "express";
+
+const router = express.Router();
 
 // Require the User model in order to interact with the database
-const Professional = require("../models/Professional.model");
-const isLoggedIn = require("../middleware/isLoggedIn");
-const Session = require("../models/Session.model");
-const Appointment = require("../models/Appointment.model");
+
+import Professional from "../models/Professional.model.js";
+import isLoggedIn from "../middleware/isLoggedIn.js";
+import Session from "../models/Session.model.js";
+import Appointment from "../models/Appointment.model.js";
 
 /**
  * @swagger
@@ -30,7 +33,6 @@ router.get("/all", isLoggedIn, async (req, res) => {
   try {
     const professionals = await Professional.find();
     return res.status(200).json(professionals);
-
   } catch (err) {
     console.error(err);
     return res.status(500).json({ errorMessage: err.toString() });
@@ -59,7 +61,7 @@ router.get("/all", isLoggedIn, async (req, res) => {
  *                 type: string
  *               imageUrl:
  *                 type: string
-*                 description:
+ *                 description:
  *                 type: string
  *     responses:
  *       200:
@@ -67,7 +69,12 @@ router.get("/all", isLoggedIn, async (req, res) => {
  */
 router.post("/", isLoggedIn, async (req, res) => {
   try {
-    if (req.body.name && req.body.lastName && req.body.imageUrl && req.body.description) {
+    if (
+      req.body.name &&
+      req.body.lastName &&
+      req.body.imageUrl &&
+      req.body.description
+    ) {
       const appointment = await Professional.create({
         name: req.body.name,
         lastName: req.body.lastName,
@@ -75,8 +82,11 @@ router.post("/", isLoggedIn, async (req, res) => {
         description: req.body.description,
       });
       return res.status(200).json(appointment);
-    }  else {
-      return res.status(400).json({ errorMessage: "Input data are invalid, should have: name, lastName and description" });
+    } else {
+      return res.status(400).json({
+        errorMessage:
+          "Input data are invalid, should have: name, lastName and description",
+      });
     }
   } catch (err) {
     console.log(err);
@@ -84,4 +94,4 @@ router.post("/", isLoggedIn, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

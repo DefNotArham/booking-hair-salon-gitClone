@@ -1,7 +1,10 @@
-const router = require("express").Router();
-const authRoutes = require("./auth.routes");
-const appointmentRoutes = require("./appointment.routes");
-const professionalsRoutes = require("./professionals.routes");
+import express from "express";
+
+const router = express.Router();
+
+import authRoutes from "./auth.routes.js";
+import appointmentRoutes from "./appointment.routes.js";
+import professionalsRoutes from "./professionals.routes.js";
 
 /**
  * @swagger
@@ -24,4 +27,4 @@ router.use("/auth", authRoutes);
 router.use("/appointments", appointmentRoutes);
 router.use("/professionals", professionalsRoutes);
 
-module.exports = router;
+export default router;

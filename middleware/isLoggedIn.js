@@ -1,6 +1,6 @@
-const Session = require("../models/Session.model");
+import Session from "../models/Session.model.js";
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
   // checks if the user is logged in when trying to access a specific page
   if (!req.headers.authorization || req.headers.authorization === "null") {
     return res.status(403).json({ errorMessage: "You are not logged in" });
@@ -8,18 +8,18 @@ module.exports = (req, res, next) => {
   // console.log(`este es el req.headers.auth ${req.headers.authorization}`)
 
   Session.findById(req.headers.authorization)
-      .populate("user")
-      .then((session) => {
-        if (!session) {
-          return res
-              .status(404)
-              .json({ errorMessage: "No session started for this user" });
-        }
-        // makes the user available in `req.user` from now onwards
-        req.user = session.user;
-        next();
-      })
-      .catch((err) => {
-        return res.status(500).json({ errorMessage: err.message });
-      });
+    .populate("user")
+    .then((session) => {
+      if (!session) {
+        return res
+          .status(404)
+          .json({ errorMessage: "No session started for this user" });
+      }
+      // makes the user available in `req.user` from now onwards
+      req.user = session.user;
+      next();
+    })
+    .catch((err) => {
+      return res.status(500).json({ errorMessage: err.message });
+    });
 };

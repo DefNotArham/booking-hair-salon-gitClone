@@ -1,31 +1,31 @@
 // We reuse this import in order to have access to the `body` property in requests
-const express = require("express");
+import express from "express";
 
 // ℹ️ Responsible for the messages you see in the terminal as requests are coming in
 // https://www.npmjs.com/package/morgan
-const logger = require("morgan");
+import logger from "morgan";
 
 // ℹ️ Needed when we deal with cookies (we will when dealing with authentication)
 // https://www.npmjs.com/package/cookie-parser
-const cookieParser = require("cookie-parser");
+import cookieParser from "cookie-parser";
 
 // ℹ️ Needed to accept from requests from 'the outside'. CORS stands for cross origin resource sharing
 // unless the request if from the same domain, by default express wont accept POST requests
-const cors = require("cors");
+import cors from "cors";
 
 // ℹ️ Session middleware for authentication
 // https://www.npmjs.com/package/express-session
-const session = require("express-session");
+import session from "express-session";
 
 // ℹ️ MongoStore in order to save the user session in the database
 // https://www.npmjs.com/package/connect-mongo
-const MongoStore = require("connect-mongo");
+import MongoStore from "connect-mongo";
 
 // Connects the mongo uri to maintain the same naming structure
-const MONGO_URI = require("../utils/consts");
+import MONGO_URI from "../utils/consts.js";
 
 // Middleware configuration
-module.exports = (app) => {
+export default (app) => {
   // Because this is a server that will accept requests from outside and it will be hosted ona server with a `proxy`, express needs to know that it should trust that setting.
   // Services like heroku use something called a proxy and you need to add this to your server
   app.set("trust proxy", 1);
@@ -36,7 +36,7 @@ module.exports = (app) => {
     cors({
       credentials: true,
       origin: process.env.ORIGIN || "http://localhost:3000",
-    })
+    }),
   );
 
   // In development environment the app logs
@@ -60,7 +60,7 @@ module.exports = (app) => {
         sameSite: "none",
         secure: process.env.NODE_ENV === "production",
       },
-    })
+    }),
   );
 
   app.use((req, res, next) => {
